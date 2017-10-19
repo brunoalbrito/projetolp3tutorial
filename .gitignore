@@ -20,3 +20,8 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/ProjetoLP3TutorialWeb/nbproject/private/
+/ProjetoLP3Tutorial/nbproject/private/
+/ProjetoLP3Tutorial/build/
+/ProjetoLP3TutorialWeb/build/
+/ProjetoLP3Tutorial/dist/
