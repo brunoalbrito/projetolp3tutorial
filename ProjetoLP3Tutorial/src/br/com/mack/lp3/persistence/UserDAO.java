@@ -79,7 +79,7 @@ public class UserDAO implements GenericDAO<User> {
         //2 Abrir conexão
         Connection connection = getConnection();
         //3 - Preparar Query
-        String query = "SELECT nome,sobrenome,sexo FROM usuario;";
+        String query = "SELECT idUsuario,nome,sobrenome,sexo FROM usuario;";
         try {
             //4- Exercutar insercao
             PreparedStatement ps = connection.prepareStatement(query);
@@ -88,6 +88,7 @@ public class UserDAO implements GenericDAO<User> {
             //Enquando houver resultados ele continua
             while (rs.next()) {
                 User user = new User();
+                user.setIdUsuario(rs.getLong("idUsuario"));
                 user.setNome(rs.getString("nome"));
                 user.setSobrenome(rs.getString("sobrenome"));
                 user.setSexo(rs.getString("sexo").charAt(0));
@@ -102,17 +103,82 @@ public class UserDAO implements GenericDAO<User> {
 
     @Override
     public User findById(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Crie a lista para retornar os usuarios
+        User user = new User();
+        //2 Abrir conexão
+        Connection connection = getConnection();
+        //3 - Preparar Query
+        String query = "SELECT idUsuario,nome,sobrenome,sexo FROM usuario where idUsuario = ?;";
+        try {
+            //4- Exercutar insercao
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setLong(1, id);
+            //Utilize o executeQuery para obser resultados
+            ResultSet rs = ps.executeQuery();
+            //Enquando houver resultados ele continua
+            while (rs.next()) {
+                user.setIdUsuario(rs.getLong("idUsuario"));
+                user.setNome(rs.getString("nome"));
+                user.setSobrenome(rs.getString("sobrenome"));
+                user.setSexo(rs.getString("sexo").charAt(0));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
     }
 
     @Override
     public boolean update(User e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //1 - Preparar retorno
+        boolean result = false;
+
+        //2 Abrir conexão
+        Connection connection = getConnection();
+
+        //3 - Preparar Query
+        String query = "UPDATE usuario SET nome = ? ,sobrenome = ?,sexo = ? WHERE idUsuario = ?;";
+
+        try {
+            //4- Exercutar insercao
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, e.getNome());
+            ps.setString(2, e.getSobrenome());
+            //Podemos mandar como String o banco consegue transformar em char
+            ps.setString(3, String.valueOf(e.getSexo()));
+            ps.setLong(4, e.getIdUsuario());
+
+            //Validar insercao
+            result = (ps.executeUpdate() != 0);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 
     @Override
     public boolean delete(User e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //1 - Preparar retorno
+        boolean result = false;
+
+        //2 Abrir conexão
+        Connection connection = getConnection();
+
+        //3 - Preparar Query
+        String query = "DELETE FROM usuario WHERE idUsuario = ?;";
+
+        try {
+            //4- Exercutar insercao
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setLong(1, e.getIdUsuario());
+
+
+            //Validar insercao
+            result = (ps.executeUpdate() != 0);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 
 }

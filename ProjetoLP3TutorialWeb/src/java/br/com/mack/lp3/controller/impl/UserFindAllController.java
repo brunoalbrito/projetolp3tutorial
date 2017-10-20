@@ -17,7 +17,11 @@ public class UserFindAllController extends AbstractController {
 
         if (!users.isEmpty()) {
             request.setAttribute("usuarios", users);
-            returnPage = "listarUsuarios.jsp";
+            if(request.getParameter("redirect").equals("listarUsuarios")){
+                returnPage = "listarUsuarios.jsp";
+            }else{
+                returnPage = "listarUsuariosAlteracao.jsp";
+            }
         } else {
             returnPage = "erro.jsp";
         }

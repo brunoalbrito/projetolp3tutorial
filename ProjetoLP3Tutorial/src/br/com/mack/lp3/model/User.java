@@ -11,6 +11,7 @@ package br.com.mack.lp3.model;
  */
 public class User {
 
+    private long idUsuario;
     private String nome;
     private String sobrenome;
     private char sexo;
@@ -48,9 +49,17 @@ public class User {
         this.sexo = sexo;
     }
 
+    public long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "nome=" + nome + ", sobrenome=" + sobrenome + ", sexo=" + sexo + '}';
+        return "User{" + "idUsuario=" + idUsuario + ", nome=" + nome + ", sobrenome=" + sobrenome + ", sexo=" + sexo + '}';
     }
 
 }

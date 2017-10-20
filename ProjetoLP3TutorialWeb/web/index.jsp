@@ -14,8 +14,11 @@
     <body>
         <h1>Hello World!</h1>
         <a href="cadastrarUsuario.jsp"><button>Cadastrar</button></a>
-        <a href="${pageContext.servletContext.contextPath}/FrontController?command=UserFindAll">
+        <a href="${pageContext.servletContext.contextPath}/FrontController?command=UserFindAll&redirect=listarUsuarios">
             <button>Listar todos usuarios</button>
         </a>
+            <a href="${pageContext.servletContext.contextPath}/FrontController?command=UserFindAll&redirect=listarUsuariosAlteracao">
+                <button>Alterar</button>
+            </a>
     </body>
 </html>
